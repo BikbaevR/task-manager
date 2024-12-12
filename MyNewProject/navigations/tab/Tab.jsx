@@ -1,19 +1,43 @@
 import {NavigationContainer} from "@react-navigation/native";
-import React from "react";
+import React, {useContext} from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {Stack} from "../stack/Stack";
 import {User} from "../../screens/user/User";
+import {AuthContext, UserProvider} from "../../contexts/user/UserProvider";
+import {Login} from "../../screens/login/Login";
+
+const TabNavigator = createBottomTabNavigator();
 
 export const Tab = () => {
 
-    const Tab = createBottomTabNavigator();
+
+
+    return (
+        <UserProvider>
+
+                <Tabs/>
+
+        </UserProvider>
+    );
+}
+
+const Tabs = () => {
+    const { authorized } = useContext(AuthContext);
+    if (!authorized) {
+        return (
+            <Login />
+        );
+    }
 
     return (
         <NavigationContainer>
-            <Tab.Navigator id='tabs' screenOptions={{ headerShown: false, tabBarIcon: () => null }}>
-                <Tab.Screen name="Stack" component={Stack} />
-                <Tab.Screen name="User" component={User} />
-            </Tab.Navigator>
+            <TabNavigator.Navigator id="tabs" screenOptions={{ headerShown: false, tabBarIcon: () => null }}>
+                <TabNavigator.Screen name="Stack" component={Stack} />
+                <TabNavigator.Screen name="User" component={User} />
+            </TabNavigator.Navigator>
         </NavigationContainer>
     );
+
+
+
 }
