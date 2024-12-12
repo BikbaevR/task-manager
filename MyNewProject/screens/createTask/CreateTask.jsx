@@ -10,7 +10,7 @@ export const CreateTask = ({ navigate }) => {
     const [value, setValue] = useState(null);
     const [taskName, setTaskName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
-    // const { addTask } = useContext(TaskContext);
+    const { addTask } = useContext(TaskContext);
 
     const handleSubmit = () => {
         if (!taskName.trim() || !taskDescription.trim() || !value) {
