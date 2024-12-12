@@ -5,25 +5,27 @@ import {Stack} from "../stack/Stack";
 import {User} from "../../screens/user/User";
 import {AuthContext, UserProvider} from "../../contexts/user/UserProvider";
 import {Login} from "../../screens/login/Login";
+import {SafeAreaView} from "react-native";
+import { styles } from "./Style";
+import {logger} from "../../scripts/logger";
 
 const TabNavigator = createBottomTabNavigator();
 
 export const Tab = () => {
-
-
-
     return (
-        <UserProvider>
-
+        <SafeAreaView style={styles.container}>
+            <UserProvider>
                 <Tabs/>
-
-        </UserProvider>
+            </UserProvider>
+        </SafeAreaView>
     );
 }
 
 const Tabs = () => {
-    const { authorized } = useContext(AuthContext);
-    if (!authorized) {
+    const { authorized, getToken } = useContext(AuthContext);
+
+    logger.writeLog("getToken --> " + getToken());
+    if (!authorized && !getToken()) {
         return (
             <Login />
         );
@@ -37,7 +39,4 @@ const Tabs = () => {
             </TabNavigator.Navigator>
         </NavigationContainer>
     );
-
-
-
 }

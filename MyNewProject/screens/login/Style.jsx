@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet} from 'react-native'
 
 export const styles = StyleSheet.create({
     container: {
@@ -12,6 +12,13 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10,
         borderWidth: 0,
+    },
+    mainText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -28,24 +35,15 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    mainText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-    },
     buttonText: {
         fontSize: 15,
         fontWeight: 'bold',
     },
-    label: {
-        fontSize: 16,
+    errorText: {
+        marginTop: 20,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    dropdownContainer: {
-        backgroundColor: '#dfdfdf',
-        borderWidth: 0,
+        textAlign: 'center',
+        color: '#8a4848'
     }
-});
+})

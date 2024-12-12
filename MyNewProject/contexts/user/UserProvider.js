@@ -1,13 +1,13 @@
 import {createContext, useState} from "react";
 import { logger } from '../../scripts/logger'
-import {deleteFromSecureStore, saveToSecureStore} from "../../scripts/secureStore";
+import {deleteFromSecureStore, getFromSecureStore, saveToSecureStore} from "../../scripts/secureStore";
 import {generateId} from "../../scripts/generateId";
 
 
 export const AuthContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState("");
     const [authorized, setAuthorized] = useState(false);
     const [storedValue, setStoredValue] = useState(null);
     const [user, setUser] = useState(null);
@@ -51,15 +51,21 @@ export const UserProvider = ({ children }) => {
             setAuthorized(true);
             setUser(loginValue);
             saveToSecureStore('userToken', generateId()).then(r => {logger.writeLog("Авторизация завершена и токен записан")})
+            setToken('token')
+            return true
         }
         else{
             logger.writeLog("login | error")
+            return false
         }
     }
 
     const logout = () => {
+        logger.writeLog("logout")
+
         setAuthorized(false);
         setUser(null)
+        setToken('')
         deleteFromSecureStore('userToken').then(r => {logger.writeLog("Пользователь разлогинился")})
     }
 
@@ -82,8 +88,15 @@ export const UserProvider = ({ children }) => {
         return false;
     }
 
+    const getToken = () => {
+        // let token = getFromSecureStore('userToken').then(null)
+        logger.writeLog('getToken.token --> ' + token)
+        return token.length > 0
+    }
+
+
     return (
-        <AuthContext.Provider value={{ token, setToken, authorized, user, login, logout, register }}>
+        <AuthContext.Provider value={{ token, setToken, authorized, user, login, logout, register, getToken }}>
             {children}
         </AuthContext.Provider>
     )
